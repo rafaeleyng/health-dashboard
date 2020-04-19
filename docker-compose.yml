@@ -1,16 +1,26 @@
 version: "3.7"
 
-
 services:
+  api:
+    build: ./api
+    networks:
+      - health-network
+    # ports:
+    #   - "4000:4000"
+
   grafana:
-    image: grafana/grafana:6.7.2
-    env_file: .compose-env
+    build: ./grafana
+    env_file: grafana/.env
+    depends_on:
+      - api
     networks:
       - health-network
     ports:
       - "3000:3000"
     environment:
       GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Admin"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+
       GF_AUTH_GOOGLE_ENABLED: "true"
       # GF_AUTH_GOOGLE_CLIENT_ID and GF_AUTH_GOOGLE_CLIENT_SECRET must be set in env_file
       GF_AUTH_GOOGLE_CLIENT_SCOPES: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
@@ -18,6 +28,13 @@ services:
       GF_AUTH_GOOGLE_CLIENT_TOKEN_URL: "https://accounts.google.com/o/oauth2/token"
       GF_AUTH_GOOGLE_CLIENT_ALLOWED_DOMAINS: "mycompany.com mycompany.org"
       GF_AUTH_GOOGLE_CLIENT_ALLOW_SIGN_UP: "true"
+
+  grafana-setup:
+    build: ./grafana/setup
+    depends_on:
+      - grafana
+    networks:
+      - health-network
 
 networks:
   health-network:
