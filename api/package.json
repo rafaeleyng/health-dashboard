@@ -10,8 +10,12 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "dotenv": "8.2.0",
+    "esm": "3.2.25",
     "express": "^4.13.4",
     "lodash": "^4.13.1",
     "require-dir": "1.2.0"
+  },
+  "devDependencies": {
+    "standard": "14.3.3"
   }
 }
