@@ -2,27 +2,32 @@ version: "3.7"
 
 services:
   api:
-    build: ./api
+    build:
+      args:
+        api_data_path: ${API_DATA_PATH:-examples}
+      context: .
+      dockerfile: docker/Dockerfile-api
     networks:
-      - health-network
-    # ports:
-    #   - "4000:4000"
+      - health-dashboard-network
+    ports:
+      - "4000:4000"
 
   grafana:
-    build: ./grafana
-    env_file: grafana/.env
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-grafana
     depends_on:
       - api
     networks:
-      - health-network
+      - health-dashboard-network
     ports:
       - "3000:3000"
     environment:
       GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Admin"
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
-
       GF_AUTH_GOOGLE_ENABLED: "true"
-      # GF_AUTH_GOOGLE_CLIENT_ID and GF_AUTH_GOOGLE_CLIENT_SECRET must be set in env_file
+      GF_AUTH_GOOGLE_CLIENT_ID: $GF_AUTH_GOOGLE_CLIENT_ID
+      GF_AUTH_GOOGLE_CLIENT_SECRET: $GF_AUTH_GOOGLE_CLIENT_SECRET
       GF_AUTH_GOOGLE_CLIENT_SCOPES: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
       GF_AUTH_GOOGLE_CLIENT_AUTH_URL: "https://accounts.google.com/o/oauth2/auth"
       GF_AUTH_GOOGLE_CLIENT_TOKEN_URL: "https://accounts.google.com/o/oauth2/token"
@@ -30,12 +35,14 @@ services:
       GF_AUTH_GOOGLE_CLIENT_ALLOW_SIGN_UP: "true"
 
   grafana-setup:
-    build: ./grafana/setup
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-grafana-setup
     depends_on:
       - grafana
     networks:
-      - health-network
+      - health-dashboard-network
 
 networks:
-  health-network:
+  health-dashboard-network:
     driver: bridge

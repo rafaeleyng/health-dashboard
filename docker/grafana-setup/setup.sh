@@ -10,4 +10,5 @@ curl -X POST \
   --data "{\"access\": \"proxy\", \"isDefault\": true, \"name\": \"JSON API\", \"type\": \"simpod-json-datasource\", \"url\": \"http://api:4000\"}" \
   ${GRAFANA_HOST}/api/datasources
 
-echo "grafana setup is done"
+echo ""
+echo "grafana setup is done, finishing setup container"
