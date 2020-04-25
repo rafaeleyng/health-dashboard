@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-api-dev
+    entrypoint: ["yarn", "watch"]
+    networks:
+      - health-dashboard-network
+    ports:
+      - "4000:4000"
+    volumes:
+      - type: bind
+        source: ../api/src
+        target: /usr/app/api/src
+      - type: bind
+        source: ../${API_DATA_PATH:-examples}
+        target: /usr/app/data
+
+  grafana:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-grafana
+    depends_on:
+      - api
+    networks:
+      - health-dashboard-network
+    ports:
+      - "3000:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+
+  grafana-setup:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-grafana-setup
+    depends_on:
+      - grafana
+    networks:
+      - health-dashboard-network
+
+networks:
+  health-dashboard-network:
+    driver: bridge

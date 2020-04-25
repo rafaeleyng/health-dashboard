@@ -5,7 +5,7 @@ services:
     build:
       args:
         api_data_path: ${API_DATA_PATH:-examples}
-      context: .
+      context: ..
       dockerfile: docker/Dockerfile-api
     networks:
       - health-dashboard-network
@@ -14,7 +14,7 @@ services:
 
   grafana:
     build:
-      context: .
+      context: ..
       dockerfile: docker/Dockerfile-grafana
     depends_on:
       - api
@@ -36,7 +36,9 @@ services:
 
   grafana-setup:
     build:
-      context: .
+      args:
+        grafana_service: ${GRAFANA_SETUP_SERVICE:-grafana}
+      context: ..
       dockerfile: docker/Dockerfile-grafana-setup
     depends_on:
       - grafana

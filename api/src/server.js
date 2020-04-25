@@ -6,6 +6,7 @@ import requireDir from 'require-dir'
 const morgan = require('morgan') // not compatible with import
 
 const loadData = (dataPath) => {
+  console.log(`[loadData] initializing data from ${dataPath}`)
   const data = {
     metrics: {}
   }
@@ -23,6 +24,7 @@ const loadData = (dataPath) => {
     }
   })
 
+  console.log('[loadData] data is', data)
   return data
 }
 

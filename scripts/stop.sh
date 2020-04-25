@@ -2,4 +2,4 @@
 
 set -e
 
-docker-compose down
+docker-compose -f docker/docker-compose.yml down
