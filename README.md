@@ -50,6 +50,7 @@ You should create a `.env` file in the root of this project containing the follo
 
 ```
 API_DATA_PATH=<the path to your data repo, if you followed the instructions should be "data">
+API_TZ=America/Sao_Paulo # the timezone you are expressing your dates in
 GF_AUTH_GOOGLE_CLIENT_ID=<a Google Auth Client ID for your to login with a Google Account>
 GF_AUTH_GOOGLE_CLIENT_SECRET=<a Google Auth Client Secret for your to login with a Google Account>
 ```

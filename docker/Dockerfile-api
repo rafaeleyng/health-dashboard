@@ -1,5 +1,7 @@
 FROM node:13.13.0-alpine3.10
 
+RUN apk add --no-cache tzdata
+
 WORKDIR /usr/app
 
 EXPOSE 4000
@@ -15,6 +17,9 @@ RUN yarn
 ARG api_data_path
 ADD ${api_data_path} ../data
 ENV API_DATA_PATH data
+
+ARG api_tz
+ENV TZ ${api_tz}
 
 ADD api/src src
 

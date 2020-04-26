@@ -5,6 +5,7 @@ services:
     build:
       args:
         api_data_path: ${API_DATA_PATH:-examples}
+        api_tz: ${API_TZ}
       context: ..
       dockerfile: docker/Dockerfile-api
     networks:
@@ -22,6 +23,10 @@ services:
       - health-dashboard-network
     ports:
       - "3000:3000"
+    volumes:
+      - type: volume
+        source: health-grafana-data
+        target: /var/lib/grafana
     environment:
       GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Admin"
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
@@ -48,3 +53,6 @@ services:
 networks:
   health-dashboard-network:
     driver: bridge
+
+volumes:
+  health-grafana-data:

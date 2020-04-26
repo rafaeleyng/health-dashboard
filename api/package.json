@@ -6,12 +6,14 @@
   "private": true,
   "scripts": {
     "start": "node src/index.js",
-    "watch": "nodemon src/index.js --watch ../data --watch ../examples"
+    "watch": "nodemon src/index.js --watch ./src --watch ../data --watch ../examples"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
     "esm": "3.2.25",
     "express": "^4.13.4",
+    "lodash": "4.17.15",
+    "moment": "2.24.0",
     "morgan": "1.10.0",
     "require-dir": "1.2.0"
   },

@@ -2,8 +2,36 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import requireDir from 'require-dir'
+import moment from 'moment'
+import _ from 'lodash'
 
 const morgan = require('morgan') // not compatible with import
+
+const parseDate = (date) => {
+  if (_.isString(date)) {
+    return moment(date).valueOf()
+  }
+  return date
+}
+
+const parseAnnotationsDates = (annotations) => {
+  annotations.forEach((annotation) => {
+    annotation.time = parseDate(annotation.time)
+  })
+  return annotations
+}
+
+const parseMetricsDates = (metrics) => {
+  for (const [metric] of Object.values(metrics)) {
+    metric.datapoints.forEach((datapoint) => {
+      const date = datapoint[0]
+      const measurement = datapoint[1]
+      datapoint[0] = measurement
+      datapoint[1] = parseDate(date)
+    })
+  }
+  return metrics
+}
 
 const loadData = (dataPath) => {
   console.log(`[loadData] initializing data from ${dataPath}`)
@@ -24,7 +52,10 @@ const loadData = (dataPath) => {
     }
   })
 
-  console.log('[loadData] data is', data)
+  data.annotations = parseAnnotationsDates(data.annotations)
+  data.metrics = parseMetricsDates(data.metrics)
+
+  console.log('[loadData] data is', JSON.stringify(data, null, 2))
   return data
 }
 

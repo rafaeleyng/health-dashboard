@@ -1,5 +1,7 @@
 FROM node:13.13.0-alpine3.10
 
+RUN apk add --no-cache tzdata
+
 WORKDIR /usr/app
 
 EXPOSE 4000
@@ -13,5 +15,8 @@ ADD api/yarn.lock yarn.lock
 RUN yarn
 
 ENV API_DATA_PATH data
+
+ARG api_tz
+ENV TZ ${api_tz}
 
 ENTRYPOINT ["yarn", "watch"]
