@@ -1,6 +1,7 @@
 # health-dashboard
 
 TODO: screenshot
+TODO: user docker-compose `-p` option to set project name
 
 A dashboard to visualize personal health related information.
 
