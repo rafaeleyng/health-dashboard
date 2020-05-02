@@ -14,12 +14,12 @@ ADD api/yarn.lock yarn.lock
 
 RUN yarn
 
-ARG api_data_path
-ADD ${api_data_path} ../data
-ENV API_DATA_PATH data
-
 ARG api_tz
 ENV TZ ${api_tz}
+
+ARG data_path
+ADD ${data_path} ../data
+ENV DATA_PATH data
 
 ADD api/src src
 

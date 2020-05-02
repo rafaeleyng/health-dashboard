@@ -1,7 +1,6 @@
 # health-dashboard
 
 TODO: screenshot
-TODO: user docker-compose `-p` option to set project name
 
 A dashboard to visualize personal health related information.
 
@@ -50,10 +49,8 @@ When you have your repo created, run:
 You should create a `.env` file in the root of this project containing the following variables:
 
 ```
-API_DATA_PATH=<the path to your data repo, if you followed the instructions should be "data">
-API_TZ=America/Sao_Paulo # the timezone you are expressing your dates in
-GF_AUTH_GOOGLE_CLIENT_ID=<a Google Auth Client ID for your to login with a Google Account>
-GF_AUTH_GOOGLE_CLIENT_SECRET=<a Google Auth Client Secret for your to login with a Google Account>
+API_TZ=America/Sao_Paulo # the timezone you are expressing your metric dates in
+DATA_PATH=<the path to your data repo, if you followed the instructions should be "data">
 ```
 
 ---

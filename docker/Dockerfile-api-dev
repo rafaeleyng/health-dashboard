@@ -14,7 +14,7 @@ ADD api/yarn.lock yarn.lock
 
 RUN yarn
 
-ENV API_DATA_PATH data
+ENV DATA_PATH data
 
 ARG api_tz
 ENV TZ ${api_tz}

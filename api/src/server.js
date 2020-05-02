@@ -7,7 +7,7 @@ import { loadData } from './services/dataService'
 const run = () => {
   configureLogger()
 
-  const dataPath = path.resolve(__dirname, '..', '..', process.env.API_DATA_PATH || 'examples')
+  const dataPath = path.resolve(__dirname, '..', '..', process.env.DATA_PATH || 'examples')
   loadData(dataPath)
 
   const app = buildApp()

@@ -4,4 +4,7 @@ FROM curlimages/curl:7.69.1
 ADD docker/grafana-setup/wait-for.sh wait-for.sh
 ADD docker/grafana-setup/setup.sh setup.sh
 
+ARG data_path
+ADD ${data_path}/dashboards dashboards
+
 ENTRYPOINT ["./wait-for.sh", "grafana:3000", "--", "./setup.sh"]

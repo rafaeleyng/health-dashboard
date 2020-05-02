@@ -4,8 +4,8 @@ services:
   api:
     build:
       args:
-        api_data_path: ${API_DATA_PATH:-examples}
         api_tz: ${API_TZ}
+        data_path: ${DATA_PATH:-examples}
       context: ..
       dockerfile: docker/Dockerfile-api
     networks:
@@ -28,21 +28,13 @@ services:
         source: health-grafana-data
         target: /var/lib/grafana
     environment:
-      GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Admin"
-      GF_AUTH_DISABLE_LOGIN_FORM: "true"
-      GF_AUTH_GOOGLE_ENABLED: "true"
-      GF_AUTH_GOOGLE_CLIENT_ID: $GF_AUTH_GOOGLE_CLIENT_ID
-      GF_AUTH_GOOGLE_CLIENT_SECRET: $GF_AUTH_GOOGLE_CLIENT_SECRET
-      GF_AUTH_GOOGLE_CLIENT_SCOPES: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
-      GF_AUTH_GOOGLE_CLIENT_AUTH_URL: "https://accounts.google.com/o/oauth2/auth"
-      GF_AUTH_GOOGLE_CLIENT_TOKEN_URL: "https://accounts.google.com/o/oauth2/token"
-      GF_AUTH_GOOGLE_CLIENT_ALLOWED_DOMAINS: "mycompany.com mycompany.org"
-      GF_AUTH_GOOGLE_CLIENT_ALLOW_SIGN_UP: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
 
   grafana-setup:
     build:
       args:
-        grafana_service: ${GRAFANA_SETUP_SERVICE:-grafana}
+        data_path: ${DATA_PATH:-examples}
       context: ..
       dockerfile: docker/Dockerfile-grafana-setup
     depends_on:
