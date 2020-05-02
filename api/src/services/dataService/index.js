@@ -5,6 +5,9 @@ import flatMap from 'lodash/flatMap'
 import { normalizeAnnotations } from '../annotationsService'
 import { normalizeMetrics } from '../metricsService'
 
+import { getLogger } from '../../logger'
+
+const logger = getLogger('dataService')
 const data = {}
 
 const loadAnnotations = (dataFolderPath) => {
@@ -38,12 +41,12 @@ const loadMetrics = (dataFolderPath) => {
 }
 
 export const loadData = (dataFolderPath) => {
-  // console.log(`[loadData] initializing data from ${dataFolderPath}`)
+  logger.debug(`initializing data from ${dataFolderPath}`)
 
   data.annotations = loadAnnotations(dataFolderPath)
   data.metrics = loadMetrics(dataFolderPath)
 
-  // console.log('[loadData] data is', JSON.stringify(data, null, 2))
+  logger.info('data =', JSON.stringify(data, null, 2))
   return data
 }
 
