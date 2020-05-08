@@ -5,7 +5,7 @@ A dashboard for visualization of personal health data.
 ![health-dashboard](https://user-images.githubusercontent.com/4842605/81372843-b6f07d00-90d1-11ea-9e29-d2d40b2cf435.png)
 
 Supports:
-- metrics for quantitative measurements (like blood tests or similar)
+- metrics for quantitative measurements. You can use metrics for anything you want, like blood tests, mood tracking, poop tracking, water consumption, urine tests, whathever you would like to visualize.
 - annotations for medical history (medicines, treatments, surgeries etc)
 
 ## how to use it
