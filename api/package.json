@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "node src/index.js",
-    "watch": "nodemon src/index.js --watch ./src --watch ../data --watch ../examples"
+    "watch": "nodemon src/index.js --watch ./src --watch ../data"
   },
   "dependencies": {
     "body-parser": "^1.15.1",

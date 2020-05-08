@@ -5,7 +5,7 @@ services:
     build:
       args:
         api_tz: ${API_TZ}
-        data_path: ${DATA_PATH:-examples}
+        data_path: ${DATA_PATH:-data}
       context: ..
       dockerfile: docker/Dockerfile-api
     networks:
@@ -34,7 +34,7 @@ services:
   grafana-setup:
     build:
       args:
-        data_path: ${DATA_PATH:-examples}
+        data_path: ${DATA_PATH:-data}
       context: ..
       dockerfile: docker/Dockerfile-grafana-setup
     depends_on:

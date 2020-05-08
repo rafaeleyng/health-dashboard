@@ -1,56 +1,62 @@
 # health-dashboard
 
-TODO: screenshot
+A dashboard for visualization of personal health data.
 
-A dashboard to visualize personal health related information.
-
-## features
+![health-dashboard](https://user-images.githubusercontent.com/4842605/81372843-b6f07d00-90d1-11ea-9e29-d2d40b2cf435.png)
 
 Supports:
-- history of blood tests or similar (quantitative measurements)
-
-Planned:
-- integration with other apps like mood tracker, poop tracker etc
-
-## architecture
-
-This project runs with Docker compose, and is composed by:
-
-- a Grafana instance, to visualize data
-- an HTTP API that will serve your data to Grafana
-- your data. It should be kept in a private repository, and cloned into this repository before running
-- scripts and configs to glue everything together
+- metrics for quantitative measurements (like blood tests or similar)
+- annotations for medical history (medicines, treatments, surgeries etc)
 
 ## how to use it
 
-<small>In the current state, this dashboard is meant to run locally only (because it is not properly secured).</small>
+This requires `docker-compose` installed.
 
-To keep your data private, you should create a private repo with the data, following the structure:
-  ```
-  - annotations.js (annotations should be used to mark significant events in your life that could change your tests. Like start taking a new drug, or stop smoking)
-  - dashboards/ (each file should be JSON model for a Grafana dashboard you want to generate, see https://grafana.com/docs/grafana/latest/reference/dashboard/)
-    - <dashboard-file-0>.json
-  - metrics/ (each file should contain data for a particular blood test, like your red blood cells)
-    - "red blood cells".[js|json]
-  ```
+```sh
+git clone git@github.com:rafaeleyng/health-dashboard.git && cd health-dashboard
 
+# create your data repository and clone it instead of the example repo bellow
+git clone git@github.com:rafaeleyng/health-dashboard-example-data.git data
 
+./scripts/start.sh
+# open http://localhost:3000
+```
 
-See the [examples](./examples) folder to see the sample data (data used if you don't provide your own).
+<small>This dashboard is meant to run locally only (because it is not properly secured). Do not deploy it at any public address.</small>
 
-When you have your repo created, run:
-  ```shell
-  git clone <data repo url> data
-  ./scripts/start.sh
-  ```
+To stop your instance, run:
+
+```sh
+./scripts/stop.sh
+```
+
+You can also run it in watch mode while creating your personal data repository, so you can see new data added on your data files just by refreshing the Grafana queries:
+
+```sh
+./scripts/watch.sh
+```
+
+## your medical data
+
+By default, `health-dashboard` runs with dummy data from an example repository.
+
+As stated in the previous section, your should create your own (private!) repository to keep your medical data and clone it as the `data` folder inside the `health-dashboard` project.
+
+Refer to https://github.com/rafaeleyng/health-dashboard-example-data as a guideline of how your data repository should look like.
 
 ## environment variables
 
-You should create a `.env` file in the root of this project containing the following variables:
+You can create a `.env` file at the root of this project containing the variables:
 
 ```
-API_TZ=America/Sao_Paulo # the timezone you are expressing your metric dates in
-DATA_PATH=<the path to your data repo, if you followed the instructions should be "data">
+API_TZ=America/Sao_Paulo # [optional, default is GMT] the timezone you are expressing your metric dates in
+DATA_PATH=my-data # [optional, default is `data`] the name of the folder you have cloned your data repository to
 ```
 
----
+## project components
+
+This project consists of:
+- a Grafana instance, to visualize data
+- an HTTP API that will serve your data to Grafana
+- your data (in a separate repository that is cloned inside this one) as JSON and/or JavaScript files
+- scripts and configs to glue everything together

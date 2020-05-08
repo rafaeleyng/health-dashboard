@@ -16,7 +16,7 @@ services:
         source: ../api/src
         target: /usr/app/api/src
       - type: bind
-        source: ../${DATA_PATH:-examples}
+        source: ../${DATA_PATH:-data}
         target: /usr/app/data
 
   grafana:
@@ -40,7 +40,7 @@ services:
   grafana-setup:
     build:
       args:
-        data_path: ${DATA_PATH:-examples}
+        data_path: ${DATA_PATH:-data}
       context: ..
       dockerfile: docker/Dockerfile-grafana-setup
     depends_on:
