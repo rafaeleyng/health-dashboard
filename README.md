@@ -22,6 +22,10 @@ git clone git@github.com:rafaeleyng/health-dashboard-example-data.git data
 # open http://localhost:3000
 ```
 
+Click on "Home" at the top to find the created dashboard(s):
+
+![image](https://user-images.githubusercontent.com/4842605/81561243-45326080-9369-11ea-974b-9849e12f2c87.png)
+
 <small>This dashboard is meant to run locally only (because it is not properly secured). Do not deploy it at any public address.</small>
 
 To stop your instance, run:
