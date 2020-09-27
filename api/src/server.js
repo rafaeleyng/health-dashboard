@@ -2,13 +2,12 @@ import path from 'path'
 
 import { configureLogger } from './logger'
 import { buildApp } from './app'
-import { loadData } from './services/dataService'
+import { getDataPath, loadData } from './services/dataService'
 
 const run = () => {
   configureLogger()
 
-  const dataPath = path.resolve(__dirname, '..', '..', process.env.DATA_PATH || 'data')
-  loadData(dataPath)
+  loadData(getDataPath())
 
   const app = buildApp()
   const port = process.env.API_PORT || 4000

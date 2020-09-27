@@ -8,7 +8,9 @@ import { normalizeMetrics } from '../metricsService'
 import { getLogger } from '../../logger'
 
 const logger = getLogger('dataService')
-const data = {}
+let data = {}
+
+export const getDataPath = () => path.resolve(__dirname, '..', '..', '..', '..', process.env.DATA_PATH || 'data')
 
 const loadAnnotations = (dataFolderPath) => {
   let annotations = require(path.resolve(dataFolderPath, 'annotations.js'))
@@ -41,13 +43,15 @@ const loadMetrics = (dataFolderPath) => {
 }
 
 export const loadData = (dataFolderPath) => {
-  logger.debug(`initializing data from ${dataFolderPath}`)
+  logger.info(`initializing data from ${dataFolderPath}`)
 
-  data.annotations = loadAnnotations(dataFolderPath)
-  data.metrics = loadMetrics(dataFolderPath)
+  const loadedData = {
+    annotations: loadAnnotations(dataFolderPath),
+    metrics: loadMetrics(dataFolderPath),
+  }
 
-  logger.info('data =', JSON.stringify(data, null, 2))
-  return data
+  logger.debug('loadedData =', JSON.stringify(loadedData, null, 2))
+  data = loadedData
 }
 
 export const getData = () => data
