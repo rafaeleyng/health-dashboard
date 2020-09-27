@@ -26,7 +26,7 @@ git clone git@github.com:rafaeleyng/health-dashboard.git && cd health-dashboard
 # create your data repository and clone it instead of the example repo bellow
 git clone git@github.com:rafaeleyng/health-dashboard-example-data.git data
 
-./scripts/start.sh
+make start
 # open http://localhost:3000
 ```
 
@@ -39,13 +39,13 @@ Click on "Home" at the top to find the created dashboard(s):
 To stop your instance, run:
 
 ```sh
-./scripts/stop.sh
+make stop
 ```
 
 You can also run it in watch mode while creating your personal data repository, so you can see new data added on your data files just by refreshing the Grafana queries:
 
 ```sh
-./scripts/watch.sh
+make watch
 ```
 
 ## your medical data
