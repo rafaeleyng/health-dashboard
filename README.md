@@ -8,6 +8,14 @@ Supports:
 - metrics for quantitative measurements. You can use metrics for anything you want, like blood tests, mood tracking, poop tracking, water consumption, urine tests, whathever you would like to visualize.
 - annotations for medical history (medicines, treatments, surgeries etc)
 
+## project components
+
+This project consists of:
+- a Grafana instance, to visualize data
+- an HTTP API that will serve your data to Grafana
+- your data (in a separate repository that is cloned inside this one) as JSON and/or JavaScript files
+- scripts and configs to glue everything together
+
 ## how to use it
 
 This requires `docker-compose` installed.
@@ -56,11 +64,3 @@ You can create a `.env` file at the root of this project containing the variable
 API_TZ=America/Sao_Paulo # [optional, default is GMT] the timezone you are expressing your metric dates in
 DATA_PATH=my-data # [optional, default is `data`] the name of the folder you have cloned your data repository to
 ```
-
-## project components
-
-This project consists of:
-- a Grafana instance, to visualize data
-- an HTTP API that will serve your data to Grafana
-- your data (in a separate repository that is cloned inside this one) as JSON and/or JavaScript files
-- scripts and configs to glue everything together
