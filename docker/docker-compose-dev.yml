@@ -18,13 +18,11 @@ services:
       - type: bind
         source: ../${DATA_PATH:-data}
         target: /usr/app/data
+    environment:
+      API_LOG_LEVEL: debug
 
   grafana:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile-grafana
-    depends_on:
-      - api
+    image: grafana/grafana:7.1.5
     networks:
       - health-dashboard-network
     ports:
@@ -36,17 +34,7 @@ services:
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-
-  grafana-setup:
-    build:
-      args:
-        data_path: ${DATA_PATH:-data}
-      context: ..
-      dockerfile: docker/Dockerfile-grafana-setup
-    depends_on:
-      - grafana
-    networks:
-      - health-dashboard-network
+      GF_INSTALL_PLUGINS: simpod-json-datasource
 
 networks:
   health-dashboard-network:

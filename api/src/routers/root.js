@@ -1,12 +1,12 @@
 import express from 'express'
 
 import { getAnnotations } from '../services/annotationsService'
-import { getDataPath, loadData } from '../services/dataService'
+import { loadData } from '../services/dataService'
 import { getAvailableMetrics, getMetrics } from '../services/metricsService'
 
 const rootHandler = (req, res) => res.end()
 const reloadHandler = (req, res) => {
-    loadData(getDataPath())
+    loadData()
     res.end()
 }
 const annotationsHandler = (req, res) => res.json(getAnnotations(req.body.annotation.query))

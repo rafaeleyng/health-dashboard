@@ -11,10 +11,10 @@ Supports:
 ## project components
 
 This project consists of:
-- a Grafana instance, to visualize data
-- an HTTP API that will serve your data to Grafana
+- a Grafana instance, to visualize your metrics data
+- an HTTP API that will serve your data to Grafana and will configure itself as a datasource for Grafana, and will create your dashboards from your dashboard data
 - your data (in a separate repository that is cloned inside this one) as JSON and/or JavaScript files
-- scripts and configs to glue everything together
+- configs to glue everything together
 
 ## how to use it
 

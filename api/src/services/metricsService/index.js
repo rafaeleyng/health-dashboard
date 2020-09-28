@@ -54,7 +54,7 @@ const padDatapoints = (filteredDatapoints, originalDatapoints) => {
 }
 
 export const getMetrics = (targets, range) => {
-  logger.debug('targets =', targets, 'range =', range)
+  logger.trace('targets =', targets, 'range =', range)
 
   if (!targets || !targets.length || !targets[0].target) {
     return []

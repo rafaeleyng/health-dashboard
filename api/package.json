@@ -9,6 +9,7 @@
     "watch": "nodemon src/index.js --watch ./src --watch ../data"
   },
   "dependencies": {
+    "axios": "0.20.0",
     "body-parser": "^1.15.1",
     "esm": "3.2.25",
     "express": "^4.13.4",
