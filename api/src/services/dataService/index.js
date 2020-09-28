@@ -10,9 +10,9 @@ import { getLogger } from '../../logger'
 const logger = getLogger('dataService')
 let data = {}
 
-export const getDataPath = () => path.resolve(__dirname, '..', '..', '..', '..', process.env.DATA_PATH || 'data')
+const dataFolderPath = path.resolve(__dirname, '..', '..', '..', '..', process.env.DATA_PATH || 'data')
 
-const loadAnnotations = (dataFolderPath) => {
+const loadAnnotations = () => {
   let annotations = require(path.resolve(dataFolderPath, 'annotations.js'))
 
   // compatibility with `esm`
@@ -23,7 +23,7 @@ const loadAnnotations = (dataFolderPath) => {
   return normalizeAnnotations(annotations)
 }
 
-const loadMetrics = (dataFolderPath) => {
+const loadMetrics = () => {
   const nestedMetrics = requireDir(path.resolve(dataFolderPath, 'metrics'), { recurse: true })
 
   const metrics = flatMap(nestedMetrics, (value, key) => {
@@ -32,25 +32,39 @@ const loadMetrics = (dataFolderPath) => {
   })
     .reduce((acc, i) => ({ ...acc, ...i }), {})
 
-  Object.entries(metrics).forEach(([metricName, metricValue]) => {
+  Object.entries(metrics).forEach(([key, value]) => {
     // compatibility with `esm`
-    if (metricValue.default) {
-      metrics[metricName] = metricValue.default
+    if (value.default) {
+      metrics[key] = value.default
     }
   })
 
   return normalizeMetrics(metrics)
 }
 
-export const loadData = (dataFolderPath) => {
+const loadDashboards = () => {
+  const dashboards = requireDir(path.resolve(dataFolderPath, 'dashboards'))
+
+  Object.entries(dashboards).forEach(([key, value]) => {
+    // compatibility with `esm`
+    if (value.default) {
+      dashboards[key] = value.default
+    }
+  })
+
+  return dashboards
+}
+
+export const loadData = () => {
   logger.info(`initializing data from ${dataFolderPath}`)
 
   const loadedData = {
-    annotations: loadAnnotations(dataFolderPath),
-    metrics: loadMetrics(dataFolderPath),
+    annotations: loadAnnotations(),
+    metrics: loadMetrics(),
+    dashboards: loadDashboards(),
   }
 
-  logger.debug('loadedData =', JSON.stringify(loadedData, null, 2))
+  logger.trace('loadedData =', JSON.stringify(loadedData, null, 2))
   data = loadedData
 }
 

@@ -1,3 +1,0 @@
-FROM grafana/grafana:7.1.5
-
-RUN grafana-cli plugins install simpod-json-datasource
