@@ -17,10 +17,6 @@ RUN yarn
 ARG api_tz
 ENV TZ ${api_tz}
 
-ARG data_path
-ADD ${data_path} ../data
-ENV DATA_PATH data
-
 ADD api/src src
 
 ENTRYPOINT ["yarn", "start"]

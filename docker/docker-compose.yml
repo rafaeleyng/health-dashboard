@@ -5,13 +5,16 @@ services:
     build:
       args:
         api_tz: ${API_TZ}
-        data_path: ${DATA_PATH:-data}
       context: ..
       dockerfile: docker/Dockerfile-api
     networks:
       - health-dashboard-network
     ports:
       - "12001:4000"
+    volumes:
+      - type: volume
+        source: health-user-data
+        target: /usr/data
 
   grafana:
     image: grafana/grafana:7.1.5

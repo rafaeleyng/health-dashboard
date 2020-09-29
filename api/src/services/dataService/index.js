@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 import requireDir from 'require-dir'
 import flatMap from 'lodash/flatMap'
@@ -10,7 +11,7 @@ import { getLogger } from '../../logger'
 const logger = getLogger('dataService')
 let data = {}
 
-const dataFolderPath = path.resolve(__dirname, '..', '..', '..', '..', process.env.DATA_PATH || 'data')
+const dataFolderPath = path.resolve('/usr/data/git/health-data')
 
 const loadAnnotations = () => {
   let annotations = require(path.resolve(dataFolderPath, 'annotations.js'))
@@ -55,8 +56,13 @@ const loadDashboards = () => {
   return dashboards
 }
 
-export const loadData = () => {
+const loadData = () => {
   logger.info(`initializing data from ${dataFolderPath}`)
+
+  if (!fs.existsSync(dataFolderPath)) {
+    logger.info(`data folder ${dataFolderPath} not found`)
+    return
+  }
 
   const loadedData = {
     annotations: loadAnnotations(),
@@ -66,6 +72,11 @@ export const loadData = () => {
 
   logger.trace('loadedData =', JSON.stringify(loadedData, null, 2))
   data = loadedData
+}
+
+export const watchLoadData = () => {
+  loadData()
+  setInterval(loadData, 10 * 1000)
 }
 
 export const getData = () => data
