@@ -1,7 +1,7 @@
 .PHONY: start
 start:
 	docker-compose -p health-dashboard -f docker/docker-compose.yml up --build --force-recreate -d
-	@echo "\naccess http://localhost:3000"
+	@echo "\naccess http://localhost:12000"
 
 .PHONY: stop
 stop:

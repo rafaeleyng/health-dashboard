@@ -14,7 +14,7 @@ services:
       API_LOG_LEVEL: info
 
   git-sync:
-    image: k8s.gcr.io/git-sync:v3.1.6
+    image: k8s.gcr.io/git-sync/git-sync:v3.1.7
     restart: unless-stopped
     volumes:
       - health-user-data:/tmp:rw
