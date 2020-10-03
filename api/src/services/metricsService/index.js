@@ -1,28 +1,11 @@
 import last from 'lodash/last'
-import sortBy from 'lodash/sortBy'
 
-import { parseDate, isInRange } from '../dateService'
+import { isInRange } from '../dateService'
 import { getData } from '../dataService'
 
 import { getLogger } from '../../logger'
 
 const logger = getLogger('metricsService')
-
-export const normalizeMetrics = (metrics) => {
-  for (const metricTargets of Object.values(metrics)) {
-    metricTargets.forEach((metric) => {
-      metric.datapoints.forEach((datapoint) => {
-        const date = datapoint[0]
-        const measurement = datapoint[1]
-        datapoint[0] = measurement
-        datapoint[1] = parseDate(date)
-      })
-
-      metric.datapoints = sortBy(metric.datapoints, '1')
-    })
-  }
-  return metrics
-}
 
 export const getAvailableMetrics = () => {
   const { metrics } = getData()
@@ -74,7 +57,6 @@ export const getMetrics = (targets, range) => {
         }
 
         const paddedDatapoints = padDatapoints(filteredDatapoints, data.datapoints)
-
         return { target: `${targetName} (${data.target})`, datapoints: paddedDatapoints }
       })
       .filter((data) => !!data)

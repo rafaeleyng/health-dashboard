@@ -1,4 +1,4 @@
-import path from 'path'
+import ms from 'ms'
 
 import { configureLogger, getLogger } from './logger'
 import { buildApp } from './app'
@@ -8,8 +8,9 @@ import { watchGrafanaSetup } from './services/grafanaService'
 const run = () => {
   configureLogger()
   const logger = getLogger('server')
-  watchLoadData()
-  watchGrafanaSetup()
+
+  setTimeout(watchLoadData, ms('15s'))
+  setTimeout(watchGrafanaSetup, ms('15s'))
 
   const app = buildApp()
   const port = process.env.API_PORT || 4000

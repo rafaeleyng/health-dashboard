@@ -1,4 +1,5 @@
 import axios from 'axios'
+import ms from 'ms'
 
 import { getData } from '../dataService'
 
@@ -68,7 +69,9 @@ const setupGrafana = async () => {
     logger.info('setupGrafana finished')
 }
 
-export const watchGrafanaSetup = () => {
-    setupGrafana()
-    setInterval(setupGrafana, 30 * 1000)
+export const watchGrafanaSetup = async () => {
+    await setupGrafana()
+    setTimeout(() => {
+        watchGrafanaSetup()
+    }, ms('1m'))
 }
