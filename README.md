@@ -62,5 +62,7 @@ You can create a `.env` file at the root of this project containing the variable
 
 ```
 API_TZ=America/Sao_Paulo # [optional, default is GMT] the timezone you are expressing your metric dates in
-DATA_PATH=my-data # [optional, default is `data`] the name of the folder you have cloned your data repository to
+GIT_SYNC_USERNAME=<your username>
+GIT_SYNC_PASSWORD=<a personal access token>
+GIT_SYNC_REPO=<your health data repo>
 ```

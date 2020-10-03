@@ -5,8 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "debug": "API_DATA_PATH=data node --inspect-brk src/index.js",
     "start": "node src/index.js",
-    "watch": "nodemon src/index.js --watch ./src --watch ../data"
+    "watch": "nodemon src/index.js --watch ./src --watch /usr/data/git/health-data"
   },
   "dependencies": {
     "axios": "0.20.0",
@@ -18,6 +19,7 @@
     "log4js": "6.2.1",
     "moment": "2.24.0",
     "morgan": "1.10.0",
+    "ms": "2.1.2",
     "prom-client": "12.0.0",
     "require-dir": "1.2.0"
   },
