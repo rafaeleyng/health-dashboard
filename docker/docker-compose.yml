@@ -2,19 +2,28 @@ version: "3.7"
 
 services:
   api:
-    build:
-      args:
-        api_tz: ${API_TZ}
-      context: ..
-      dockerfile: docker/Dockerfile-api
+    image: rafaeleyng/health-dashboard-api:latest
     networks:
       - health-dashboard-network
     ports:
       - "12001:4000"
+    restart: unless-stopped
     volumes:
-      - type: volume
-        source: health-user-data
-        target: /usr/data
+      - health-user-data:/usr/data:ro
+    environment:
+      API_LOG_LEVEL: info
+
+  git-sync:
+    image: k8s.gcr.io/git-sync:v3.1.6
+    restart: unless-stopped
+    volumes:
+      - health-user-data:/tmp:rw
+    environment:
+      GIT_SYNC_USERNAME: ${GIT_SYNC_USERNAME}
+      GIT_SYNC_PASSWORD: ${GIT_SYNC_PASSWORD}
+      GIT_SYNC_REPO: ${GIT_SYNC_REPO}
+      GIT_SYNC_DEST: health-data
+      GIT_SYNC_WAIT: 30
 
   grafana:
     image: grafana/grafana:7.1.5
@@ -22,10 +31,9 @@ services:
       - health-dashboard-network
     ports:
       - "12000:3000"
+    restart: unless-stopped
     volumes:
-      - type: volume
-        source: health-grafana-data
-        target: /var/lib/grafana
+      - health-grafana-data:/var/lib/grafana:rw
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
@@ -36,4 +44,5 @@ networks:
     driver: bridge
 
 volumes:
+  health-user-data:
   health-grafana-data:

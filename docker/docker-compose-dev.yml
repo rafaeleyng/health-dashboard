@@ -12,7 +12,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - health-user-data:/usr/data:ro
+      - health-user-data-dev:/usr/data:ro
       - ../api/src:/usr/app/api/src
     environment:
       API_LOG_LEVEL: debug
@@ -20,7 +20,7 @@ services:
   git-sync:
     image: k8s.gcr.io/git-sync:v3.1.6
     volumes:
-      - health-user-data:/tmp:rw
+      - health-user-data-dev:/tmp:rw
     environment:
       GIT_SYNC_USERNAME: ${GIT_SYNC_USERNAME}
       GIT_SYNC_PASSWORD: ${GIT_SYNC_PASSWORD}
@@ -46,5 +46,5 @@ networks:
     driver: bridge
 
 volumes:
-  health-user-data:
+  health-user-data-dev:
   health-grafana-data-dev:
